@@ -2,12 +2,14 @@
  * =====================================================================
  * Programming Project for NCEA Level 2, Standard 91896
  * ---------------------------------------------------------------------
- * Project Name:   PROJECT NAME HERE
- * Project Author: PROJECT AUTHOR HERE
- * GitHub Repo:    GITHUB REPO URL HERE
+ * Project Name:   Generic_Racing_Game
+ * Project Author: Oliver
+ * GitHub Repo:    https://github.com/Waimea-OBrownrigg/level-2-programming-assessment
  * ---------------------------------------------------------------------
  * Notes:
- * PROJECT NOTES HERE
+ * This is a generic racing game, viewed from a top-down perspective,
+ * control your speed around the corners to ensure you don't crash,
+ * and make sure you finish ahead of your opponent!
  * =====================================================================
  */
 
