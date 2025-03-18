@@ -1,6 +1,6 @@
 # Generic_Racing_Game
 
-by Oliver
+By Oliver
 
 ---
 
@@ -11,8 +11,6 @@ The project is written in the [Kotlin](https://kotlinlang.org) programming langu
 - Creating functions that use parameters and/or return values
 - Using non-trivial string manipulation
 - Using additional non-core libraries
-
-** EDIT LIST ABOVE TO MATCH YOUR PROJECT**
 
 ---
 
