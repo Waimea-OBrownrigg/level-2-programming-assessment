@@ -72,31 +72,32 @@ fun main() {
 
     while (true) {
         while(true) {
-            var movement = a_or_b(current_turn)
+            var movement = a_b_or_c(current_turn)
             if (movement.contains("A")) {
                 when (current_turn) {
-                    1 -> p1_speed + 20
-                    2 -> p2_speed + 20
+                    1 -> p1_speed += 20
+                    2 -> p2_speed +=20
                     else -> p1_speed + 1000000000
                 }
             }
-            else {
+            if (movement.contains("B")){
                 when (current_turn) {
                     1 -> {
-                        p1_speed - 20
+                        p1_speed -= 20
                         if (p1_speed < 0) {
-                            // p1_speed = 0
+                            p1_speed = 0
                         }
                     }
                     2 -> {
-                        p2_speed - 20
+                        p2_speed -= 20
                         if (p2_speed < 0) {
-                            //p2_speed = 0
+                            p2_speed = 0
                         }
                     }
                     else -> p1_speed - 1000000000
                 }
             }
+            move_car(current_turn, p1_speed, p2_speed, p1_track, p2_track)
             when(current_turn) {
                 1 -> current_turn = 2
                 2 -> {
@@ -105,8 +106,7 @@ fun main() {
                 }
             }
         }
-        move_car(current_turn, p1_speed, p2_speed)
-        println(p1_speed)
+
         draw_track(p1_track, p2_track)
     }
 
@@ -116,44 +116,29 @@ fun main() {
 fun set_up(race_no: Int): MutableList<String> {
     val track = mutableListOf<String>()
     for (i in 1..TRACKLENGTH) track.add(EMPTY)
-    track[0] = ("p$race_no")
+    track[0] = ("$race_no")
     return track
 }
 
-fun take_turn(racer: Int, p1_speed: Int, p2_speed: Int) {
-    var movement = a_or_b(racer)
-    if (movement.contains("A")) {
-        when (racer) {
-            1 -> p1_speed + 20
-            2 -> p2_speed + 20
-            else -> p1_speed + 1000000000
-        }
+fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<String>, p2_track: MutableList<String>) {
+    var speed: Int
+    var track: MutableList<String>
+    when (racer) {
+        "1" -> speed = p1_speed
+        "2" -> speed = p2_speed
+        else -> speed = 0
+    }
+    when (racer) {
+        "1" -> track = p1_track
+        "2" -> track = p2_track
+        else -> track = p1_track
+    }
+    if (speed == 0) {
     }
     else {
-        when (racer) {
-            1 -> {
-                p1_speed - 20
-                if (p1_speed < 0) {
-                   // p1_speed = 0
-                }
-            }
-            2 -> {
-                p2_speed - 20
-                if (p2_speed < 0) {
-                    //p2_speed = 0
-                }
-            }
-            else -> p1_speed - 1000000000
-        }
-    }
-}
-
-fun move_car(racer: Int, p1_speed: Int, p2_speed: Int) {
-    var speed: Int
-    when (racer) {
-        1 -> speed = p1_speed
-        2 -> speed = p2_speed
-        else -> speed = 0
+        speed = (speed/10)
+        var start = track.indexOf(racer)
+        track[start += speed]
     }
 }
 
@@ -163,11 +148,12 @@ fun draw_track(p1_track: MutableList<String>, p2_track: MutableList<String>) {
     println("")
 }
 
-fun a_or_b(racer: Int): String {
+fun a_b_or_c(racer: Int): String {
     var action: String
     println("Player $racer's turn")
     println("A = Accelerate")
     println("B = Brake")
+    println("C = Coast")
     while (true) {
         print("Input action: ")
         action = readln().uppercase()
