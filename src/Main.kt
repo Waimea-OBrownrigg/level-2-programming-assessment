@@ -58,7 +58,7 @@
 //
 //
 
-const val TRACKLENGTH = 87      // The total number of cages
+const val TRACKLENGTH = 88      // The total number of cages
 const val EMPTY = " "     // Represents an empty cage
 
 fun main() {
@@ -97,7 +97,7 @@ fun main() {
                     else -> p1_speed - 1000000000
                 }
             }
-            move_car(current_turn, p1_speed, p2_speed, p1_track, p2_track)
+            move_car(current_turn.toString(), p1_speed, p2_speed, p1_track, p2_track)
             when(current_turn) {
                 1 -> current_turn = 2
                 2 -> {
@@ -108,6 +108,8 @@ fun main() {
         }
 
         draw_track(p1_track, p2_track)
+        println(p1_speed)
+        println(p2_speed)
     }
 
 }
@@ -115,8 +117,10 @@ fun main() {
         // Makes a list to act as the track, then fills it with empty slots and adds a race car.
 fun set_up(race_no: Int): MutableList<String> {
     val track = mutableListOf<String>()
-    for (i in 1..TRACKLENGTH) track.add(EMPTY)
-    track[0] = ("$race_no")
+    for (i in 1..TRACKLENGTH) {
+        track.add(EMPTY)
+    }
+    track[1] = ("$race_no")
     return track
 }
 
@@ -136,15 +140,38 @@ fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<
     if (speed == 0) {
     }
     else {
+        var has_moved = 0
         speed = (speed/10)
         var start = track.indexOf(racer)
-        track[start += speed]
+        try {
+            track[start] = (EMPTY)
+            track[start + speed] = racer
+            has_moved = 1
+        }
+        catch (e: IndexOutOfBoundsException) {
+            print("")
+        }
+        if (has_moved == 0) {
+            repeat(speed) {
+                start = track.indexOf(racer)
+                if (track.indexOf(racer) < 88) {
+                    track[start] = (EMPTY)
+                    track[start + 1] = racer
+                }
+                if (track.indexOf(racer) == 88) {
+                    track[track.indexOf(racer)] = (EMPTY)
+                    track[0] = racer
+                }
+            }
+        }
     }
 }
 
 fun draw_track(p1_track: MutableList<String>, p2_track: MutableList<String>) {
     println(p1_track)
     println(p2_track)
+    println(p1_track.indexOf("1"))
+    println(p2_track.indexOf("2"))
     println("")
 }
 
@@ -159,7 +186,15 @@ fun a_b_or_c(racer: Int): String {
         action = readln().uppercase()
         if (action.isNotBlank()) {
             println("")
-            break
+            if (action.contains("A")) {
+                break
+            }
+            else if (action.contains("B")) {
+                break
+            }
+            else if (action.contains("C")) {
+                break
+            }
         }
     }
     return action
