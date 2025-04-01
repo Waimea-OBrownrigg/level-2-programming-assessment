@@ -12,54 +12,9 @@
  * and make sure you finish ahead of your opponent!
  * =====================================================================
  */
-//                — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —
-//              /  3    3   3   3   3   3   3   3   3   3   3   3   3    3   3   3  3   3     3  \
-//            /         3   3   3   3   3   3   3   3   3   3   3   3   3   3   3   3   3          \
-//          /  3    3 — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —  3    3  \
-//        /      3  /                                                                        \  3      \
-//      /  3   3  /                                                                            \  3   3  \
-//     |  3   3  |                                                                              |  3   3  |
-//     |  3   3  |                                                                              |  3   3  |
-//     |  3   3  |                                                                              |  3   3  |
-//     |  3   3  |                                                                              |  3   3  |
-//     |  3   3  |                                                                              |  3   3  |
-//     |  3   3  |                                                                              |  3   3  |
-//     |  3   3  |                                                                              |  3   3  |
-//      \  3   3  \                                                                             |  3   3  |
-//        \      3  \                                                                           |  3   3  |
-//          \  3    3 — — — — — — — — — — — — — — — — — — — —                                   |  3   3  |
-//            \         3   3   3   3   3   3   3   3   3   3  \                                |  3   3  |
-//              \  3    3   3   3   3   3   3   3   3   3        \                              |  3   3  |
-//                — — — — — — — — — — — — — — — — — — — —  3    3  \                            |  3   3  |
-//                                                         \  3      \                          |  3   3  |
-//                                                           \  3   3  \                        |  3   3  |
-//                                                            |  3   3  |                       |  3   3  |
-//                                                            |  3   3  |                       |  3   3  |
-//                                                            |  3   3  |                       |  3   3  |
-//                                                            |  3   3  |                       |  3   3  |
-//                                                            |  3   3  |                       |  3   3  |
-//                                                            |  3   3  |                       |  3   3  |
-//                                                            |  3   3  |                       |  3   3  |
-//                                                            |  3   3  |                       |  3   3  |
-//                                                             \  3   3  \                     /  3   3  /
-//                                                               \      3  \                 /  3      /
-//                                                                 \  3    3 — — — — — — — — 3    3  /
-//                                                                   \        3   3   3   3        /
-//                                                                     \ 3    3   3   3   3    3 /
-//                                                                        — — — — — — — — — — —
-//
-//
-//
-//
-//                            There are 87 places your car could be at any given moment.
-//
-//
-//
-//
-//
 
-const val TRACKLENGTH = 88      // The total number of cages
-const val EMPTY = " "     // Represents an empty cage
+const val TRACKLENGTH = 87
+const val EMPTY = " "
 
 fun main() {
 
@@ -149,16 +104,16 @@ fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<
             has_moved = 1
         }
         catch (e: IndexOutOfBoundsException) {
-            print("")
+            track[start] = racer
         }
         if (has_moved == 0) {
             repeat(speed) {
                 start = track.indexOf(racer)
-                if (track.indexOf(racer) < 88) {
+                if (track.indexOf(racer) < 86) {
                     track[start] = (EMPTY)
                     track[start + 1] = racer
                 }
-                if (track.indexOf(racer) == 88) {
+                if (track.indexOf(racer) == 86) {
                     track[track.indexOf(racer)] = (EMPTY)
                     track[0] = racer
                 }
@@ -168,8 +123,41 @@ fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<
 }
 
 fun draw_track(p1_track: MutableList<String>, p2_track: MutableList<String>) {
-    println(p1_track)
-    println(p2_track)
+    println("                — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —")
+    println("              /  ${p1_track[79]}    ${p1_track[80]}   ${p1_track[81]}   ${p1_track[82]}   ${p1_track[83]}   ${p1_track[84]}   ${p1_track[85]}   ${p1_track[86]} | ${p1_track[1]}   ${p1_track[2]}   ${p1_track[3]}   ${p1_track[4]}   ${p1_track[5]}   ${p1_track[6]}   ${p1_track[7]}   ${p1_track[8]}  ${p1_track[9]}   ${p1_track[10]}     ${p1_track[11]}  \\")
+    println("            /         ${p2_track[80]}   ${p2_track[81]}   ${p2_track[82]}   ${p2_track[83]}   ${p2_track[84]}   ${p2_track[85]}   ${p2_track[86]} | ${p2_track[1]}   ${p2_track[2]}   ${p2_track[3]}   ${p2_track[4]}   ${p2_track[5]}   ${p2_track[6]}   ${p2_track[7]}   ${p2_track[8]}   ${p2_track[9]}   ${p2_track[10]}          \\")
+    println("          /  ${p1_track[78]}    ${p2_track[79]} — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —  ${p2_track[11]}    ${p1_track[12]}  \\")
+    println("        /      ${p2_track[78]}  /                                                                        \\  ${p2_track[12]}      \\")
+    println("      /  ${p1_track[77]}   ${p2_track[77]}  /                                                                            \\  ${p2_track[13]}   ${p1_track[13]}  \\")
+    println("     |  ${p1_track[76]}   ${p2_track[76]}  |                                                                              |  ${p2_track[14]}   ${p1_track[14]}  |")
+    println("     |  ${p1_track[75]}   ${p2_track[75]}  |                                                                              |  ${p2_track[15]}   ${p1_track[15]}  |")
+    println("     |  ${p1_track[74]}   ${p2_track[74]}  |                                                                              |  ${p2_track[16]}   ${p1_track[16]}  |")
+    println("     |  ${p1_track[73]}   ${p2_track[73]}  |                                                                              |  ${p2_track[17]}   ${p1_track[17]}  |")
+    println("     |  ${p1_track[72]}   ${p2_track[72]}  |                                                                              |  ${p2_track[18]}   ${p1_track[18]}  |")
+    println("     |  ${p1_track[71]}   ${p2_track[71]}  |                                                                              |  ${p2_track[19]}   ${p1_track[19]}  |")
+    println("     |  ${p1_track[70]}   ${p2_track[70]}  |                                                                              |  ${p2_track[20]}   ${p1_track[20]}  |")
+    println("      \\  ${p1_track[69]}   ${p2_track[69]}  \\                                                                             |  ${p2_track[21]}   ${p1_track[21]}  |")
+    println("        \\      ${p2_track[68]}  \\                                                                           |  ${p2_track[22]}   ${p1_track[22]}  |")
+    println("          \\  ${p1_track[68]}    ${p2_track[67]} — — — — — — — — — — — — — — — — — — — —                                   |  ${p2_track[23]}   ${p1_track[23]}  |")
+    println("            \\         ${p2_track[66]}   ${p2_track[65]}   ${p2_track[64]}   ${p2_track[63]}   ${p2_track[62]}   ${p2_track[61]}   ${p2_track[60]}   ${p2_track[59]}   ${p2_track[58]}   ${p2_track[57]}  \\                                |  ${p2_track[24]}   ${p1_track[24]}  |")
+    println("              \\  ${p1_track[67]}    ${p1_track[66]}   ${p1_track[65]}   ${p1_track[64]}   ${p1_track[63]}   ${p1_track[62]}   ${p1_track[61]}   ${p1_track[60]}   ${p1_track[59]}   ${p1_track[58]}        \\                              |  ${p2_track[25]}   ${p1_track[25]}  |")
+    println("                — — — — — — — — — — — — — — — — — — — —  ${p1_track[57]}    ${p2_track[56]}  \\                            |  ${p2_track[26]}   ${p1_track[26]}  |")
+    println("                                                         \\  ${p1_track[56]}      \\                          |  ${p2_track[27]}   ${p1_track[27]}  |")
+    println("                                                           \\  ${p1_track[55]}   ${p2_track[55]}  \\                        |  ${p2_track[28]}   ${p1_track[28]}  |")
+    println("                                                            |  ${p1_track[54]}   ${p2_track[54]}  |                       |  ${p2_track[29]}   ${p1_track[29]}  |")
+    println("                                                            |  ${p1_track[53]}   ${p2_track[53]}  |                       |  ${p2_track[30]}   ${p1_track[30]}  |")
+    println("                                                            |  ${p1_track[52]}   ${p2_track[52]}  |                       |  ${p2_track[31]}   ${p1_track[31]}  |")
+    println("                                                            |  ${p1_track[51]}   ${p2_track[51]}  |                       |  ${p2_track[32]}   ${p1_track[32]}  |")
+    println("                                                            |  ${p1_track[50]}   ${p2_track[50]}  |                       |  ${p2_track[33]}   ${p1_track[33]}  |")
+    println("                                                            |  ${p1_track[49]}   ${p2_track[49]}  |                       |  ${p2_track[34]}   ${p1_track[34]}  |")
+    println("                                                            |  ${p1_track[48]}   ${p2_track[48]}  |                       |  ${p2_track[35]}   ${p1_track[35]}  |")
+    println("                                                            |  ${p1_track[47]}   ${p2_track[47]}  |                       |  ${p2_track[36]}   ${p1_track[36]}  |")
+    println("                                                             \\  ${p1_track[46]}   ${p2_track[46]}  \\                     /  ${p2_track[37]}   ${p1_track[37]}  /")
+    println("                                                               \\      ${p2_track[45]}  \\                 /  ${p2_track[38]}      /")
+    println("                                                                 \\  ${p1_track[45]}    ${p2_track[44]} — — — — — — — — ${p2_track[39]}    ${p1_track[38]}  /")
+    println("                                                                   \\        ${p2_track[43]}   ${p2_track[42]}   ${p2_track[41]}   ${p2_track[40]}        /")
+    println("                                                                     \\ ${p1_track[44]}    ${p1_track[43]}   ${p1_track[42]}   ${p1_track[41]}   ${p1_track[40]}    ${p1_track[39]} /")
+    println("                                                                        — — — — — — — — — — —")
     println(p1_track.indexOf("1"))
     println(p2_track.indexOf("2"))
     println("")
