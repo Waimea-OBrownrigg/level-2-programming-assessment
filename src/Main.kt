@@ -1,3 +1,4 @@
+import kotlin.random.Random
 /**
  * =====================================================================
  * Programming Project for NCEA Level 2, Standard 91896
@@ -20,14 +21,50 @@ fun main() {
 
     val p1_track = set_up(1)
     val p2_track = set_up(2)
+    val corners = mutableListOf<Boolean>()
+    for (i in 1..TRACKLENGTH) {
+        corners.add(false)
+    }
+    corners[11] = true
+    corners[12] = true
+    corners[13] = true
+    corners[37] = true
+    corners[38] = true
+    corners[39] = true
+    corners[44] = true
+    corners[45] = true
+    corners[46] = true
+    corners[55] = true
+    corners[56] = true
+    corners[57] = true
+    corners[67] = true
+    corners[68] = true
+    corners[69] = true
+    corners[77] = true
+    corners[78] = true
+    corners[79] = true
 
     var p1_speed = 0
     var p2_speed = 0
     var current_turn = (1)
 
+    println("Generic_Game_Dev presents...")
+    println("     -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+    println("-=-=-=-=-=-=-=-=-=-Kotlin Super Racer!-=-=-=-=-=-=-=-=-=-")
+    println("     -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+    println("")
+    print("                Press any key to start: ")
+    readln()
+    println()
+    println("Welcome, to the Kotlin Super Racer world finals!")
+    print("Want a rundown of the rules?")
+    var rouxls = readln()
+    println()
+    if (rouxls = )
+
     while (true) {
         while(true) {
-            var movement = a_b_or_c(current_turn)
+            var movement = a_b_or_c(current_turn, p1_speed, p2_speed)
             if (movement.contains("A")) {
                 when (current_turn) {
                     1 -> p1_speed += 20
@@ -52,7 +89,7 @@ fun main() {
                     else -> p1_speed - 1000000000
                 }
             }
-            move_car(current_turn.toString(), p1_speed, p2_speed, p1_track, p2_track)
+            move_car(current_turn.toString(), p1_speed, p2_speed, p1_track, p2_track, corners)
             when(current_turn) {
                 1 -> current_turn = 2
                 2 -> {
@@ -63,8 +100,6 @@ fun main() {
         }
 
         draw_track(p1_track, p2_track)
-        println(p1_speed)
-        println(p2_speed)
     }
 
 }
@@ -79,7 +114,7 @@ fun set_up(race_no: Int): MutableList<String> {
     return track
 }
 
-fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<String>, p2_track: MutableList<String>) {
+fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<String>, p2_track: MutableList<String>, corners: MutableList<Boolean>) {
     var speed: Int
     var track: MutableList<String>
     when (racer) {
@@ -109,22 +144,26 @@ fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<
         if (has_moved == 0) {
             repeat(speed) {
                 start = track.indexOf(racer)
-                if (track.indexOf(racer) < 86) {
-                    track[start] = (EMPTY)
-                    track[start + 1] = racer
-                }
                 if (track.indexOf(racer) == 86) {
                     track[track.indexOf(racer)] = (EMPTY)
                     track[0] = racer
                 }
+                if (track.indexOf(racer) < 86) {
+                    track[start] = (EMPTY)
+                    track[start + 1] = racer
+                }
             }
+        }
+        if (corners[track.indexOf(racer)] == true) {
+            var RNG = Random.nextInt(1, 100)
+            println("$RNG")
         }
     }
 }
 
 fun draw_track(p1_track: MutableList<String>, p2_track: MutableList<String>) {
     println("                — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —")
-    println("              /  ${p1_track[79]}    ${p1_track[80]}   ${p1_track[81]}   ${p1_track[82]}   ${p1_track[83]}   ${p1_track[84]}   ${p1_track[85]}   ${p1_track[86]} | ${p1_track[1]}   ${p1_track[2]}   ${p1_track[3]}   ${p1_track[4]}   ${p1_track[5]}   ${p1_track[6]}   ${p1_track[7]}   ${p1_track[8]}  ${p1_track[9]}   ${p1_track[10]}     ${p1_track[11]}  \\")
+    println("              /  ${p1_track[79]}    ${p1_track[80]}   ${p1_track[81]}   ${p1_track[82]}   ${p1_track[83]}   ${p1_track[84]}   ${p1_track[85]}   ${p1_track[86]} | ${p1_track[1]}   ${p1_track[2]}   ${p1_track[3]}   ${p1_track[4]}   ${p1_track[5]}   ${p1_track[6]}   ${p1_track[7]}   ${p1_track[8]}   ${p1_track[9]}   ${p1_track[10]}     ${p1_track[11]}  \\")
     println("            /         ${p2_track[80]}   ${p2_track[81]}   ${p2_track[82]}   ${p2_track[83]}   ${p2_track[84]}   ${p2_track[85]}   ${p2_track[86]} | ${p2_track[1]}   ${p2_track[2]}   ${p2_track[3]}   ${p2_track[4]}   ${p2_track[5]}   ${p2_track[6]}   ${p2_track[7]}   ${p2_track[8]}   ${p2_track[9]}   ${p2_track[10]}          \\")
     println("          /  ${p1_track[78]}    ${p2_track[79]} — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —  ${p2_track[11]}    ${p1_track[12]}  \\")
     println("        /      ${p2_track[78]}  /                                                                        \\  ${p2_track[12]}      \\")
@@ -158,14 +197,21 @@ fun draw_track(p1_track: MutableList<String>, p2_track: MutableList<String>) {
     println("                                                                   \\        ${p2_track[43]}   ${p2_track[42]}   ${p2_track[41]}   ${p2_track[40]}        /")
     println("                                                                     \\ ${p1_track[44]}    ${p1_track[43]}   ${p1_track[42]}   ${p1_track[41]}   ${p1_track[40]}    ${p1_track[39]} /")
     println("                                                                        — — — — — — — — — — —")
-    println(p1_track.indexOf("1"))
-    println(p2_track.indexOf("2"))
     println("")
 }
 
-fun a_b_or_c(racer: Int): String {
+fun a_b_or_c(racer: Int, p1_speed: Int, p2_speed: Int): String {
     var action: String
     println("Player $racer's turn")
+    when (racer) {
+        1 -> {
+            println("Your current speed is $p1_speed")
+        }
+        2 -> {
+            println("Your current speed is $p2_speed")
+        }
+    }
+    println("")
     println("A = Accelerate")
     println("B = Brake")
     println("C = Coast")
@@ -186,4 +232,10 @@ fun a_b_or_c(racer: Int): String {
         }
     }
     return action
+}
+
+fun read(input: String) {
+    input.uppercase()
+    if (input.isNotBlank()) {
+    }
 }
