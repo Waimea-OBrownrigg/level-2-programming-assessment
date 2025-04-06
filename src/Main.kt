@@ -57,10 +57,18 @@ fun main() {
     readln()
     println()
     println("Welcome, to the Kotlin Super Racer world finals!")
-    print("Want a rundown of the rules?")
-    var rouxls = readln()
-    println()
-    if (rouxls = )
+    println("Want a rundown of the rules? ")
+    while (true) {
+        var rouxls = read("Y(es)/N(o)")
+        if (rouxls.contains("Y")) {
+            println("Alright then,")
+            break
+        }
+        if (rouxls.contains("N")) {
+            println("Ok then.")
+            break
+        }
+    }
 
     while (true) {
         while(true) {
@@ -216,26 +224,28 @@ fun a_b_or_c(racer: Int, p1_speed: Int, p2_speed: Int): String {
     println("B = Brake")
     println("C = Coast")
     while (true) {
-        print("Input action: ")
-        action = readln().uppercase()
-        if (action.isNotBlank()) {
-            println("")
-            if (action.contains("A")) {
-                break
-            }
-            else if (action.contains("B")) {
-                break
-            }
-            else if (action.contains("C")) {
-                break
-            }
+        action = read("Input action:")
+        if (action.contains("A")) {
+            break
         }
+        else if (action.contains("B")) {
+            break
+        }
+        else if (action.contains("C")) {
+            break
+        }
+
     }
     return action
 }
 
-fun read(input: String) {
-    input.uppercase()
-    if (input.isNotBlank()) {
+fun read(question: String): String {
+    print("$question ")
+    while (true) {
+        var answer = readln().uppercase()
+        if (answer.isNotBlank()) {
+            println()
+            return answer
+        }
     }
 }
