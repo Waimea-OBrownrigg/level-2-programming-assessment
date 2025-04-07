@@ -44,9 +44,15 @@ fun main() {
     corners[78] = true
     corners[79] = true
 
+    var current_turn = 1
     var p1_speed = 0
     var p2_speed = 0
-    var current_turn = (1)
+    var p1_lap = 0
+    var p2_lap = 0
+    var p1_pos = 0
+    var p2_pos = 0
+    var win = 0
+
 
     println("Generic_Game_Dev presents...")
     println("     -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
@@ -71,25 +77,25 @@ fun main() {
     }
 
     while (true) {
-        while(true) {
+        repeat(2) {
             var movement = a_b_or_c(current_turn, p1_speed, p2_speed)
             if (movement.contains("A")) {
                 when (current_turn) {
-                    1 -> p1_speed += 20
-                    2 -> p2_speed +=20
+                    1 -> p1_speed += 10
+                    2 -> p2_speed += 10
                     else -> p1_speed + 1000000000
                 }
             }
             if (movement.contains("B")){
                 when (current_turn) {
                     1 -> {
-                        p1_speed -= 20
+                        p1_speed -= 10
                         if (p1_speed < 0) {
                             p1_speed = 0
                         }
                     }
                     2 -> {
-                        p2_speed -= 20
+                        p2_speed -= 10
                         if (p2_speed < 0) {
                             p2_speed = 0
                         }
@@ -97,19 +103,42 @@ fun main() {
                     else -> p1_speed - 1000000000
                 }
             }
-            move_car(current_turn.toString(), p1_speed, p2_speed, p1_track, p2_track, corners)
+            when (current_turn) {
+                1 -> p1_speed = move_car(current_turn.toString(), p1_speed, p2_speed, p1_track, p2_track, corners)
+                2 -> p2_speed = move_car(current_turn.toString(), p1_speed, p2_speed, p1_track, p2_track, corners)
+                else -> p1_speed + 1000000000
+            }
+
             when(current_turn) {
-                1 -> current_turn = 2
+                1 -> {
+                    if (p1_track.indexOf("1") < p1_pos) {
+                        p1_lap++
+                    }
+                    p1_pos = p1_track.indexOf("1")
+                }
                 2 -> {
-                    current_turn = 1
-                    break
+                    if (p2_track.indexOf("2") < p2_pos) {
+                        p2_lap++
+                    }
+                    p2_pos = p2_track.indexOf("2")
                 }
             }
+
+            when(current_turn) {
+                1 -> current_turn = 2
+                2 -> current_turn = 1
+            }
         }
-
         draw_track(p1_track, p2_track)
+        if (p1_lap == 3) {
+            win = 1
+            break
+        }
+        if (p2_lap == 3) {
+            win = 2
+            break
+        }
     }
-
 }
 
         // Makes a list to act as the track, then fills it with empty slots and adds a race car.
@@ -122,7 +151,7 @@ fun set_up(race_no: Int): MutableList<String> {
     return track
 }
 
-fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<String>, p2_track: MutableList<String>, corners: MutableList<Boolean>) {
+fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<String>, p2_track: MutableList<String>, corners: MutableList<Boolean>): Int {
     var speed: Int
     var track: MutableList<String>
     when (racer) {
@@ -139,33 +168,79 @@ fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<
     }
     else {
         var has_moved = 0
+        var corners_probably_exist = 0
         speed = (speed/10)
         var start = track.indexOf(racer)
-        try {
-            track[start] = (EMPTY)
-            track[start + speed] = racer
-            has_moved = 1
-        }
-        catch (e: IndexOutOfBoundsException) {
-            track[start] = racer
-        }
-        if (has_moved == 0) {
-            repeat(speed) {
-                start = track.indexOf(racer)
-                if (track.indexOf(racer) == 86) {
-                    track[track.indexOf(racer)] = (EMPTY)
-                    track[0] = racer
-                }
-                if (track.indexOf(racer) < 86) {
-                    track[start] = (EMPTY)
-                    track[start + 1] = racer
-                }
+        var end = (track.indexOf(racer) + speed)
+        for (i in (start..end)) {
+            if (corners[i] == true) {
+                corners_probably_exist++
             }
         }
-        if (corners[track.indexOf(racer)] == true) {
-            var RNG = Random.nextInt(1, 100)
-            println("$RNG")
+        if (corners_probably_exist == 0) {
+            try {
+                track[start] = (EMPTY)
+                track[start + speed] = racer
+                has_moved = 1
+            } catch (e: IndexOutOfBoundsException) {
+                track[start] = racer
+            }
         }
+        if (has_moved == 0) {
+            var crash = 0
+            repeat(speed) {
+                if (crash == 0) {
+                    start = track.indexOf(racer)
+                    if (track.indexOf(racer) == 86) {
+                        track[track.indexOf(racer)] = (EMPTY)
+                        track[0] = racer
+                    }
+                    if (track.indexOf(racer) < 86) {
+                        track[start] = (EMPTY)
+                        track[start + 1] = racer
+                        if (corners[track.indexOf(racer)] == true) {
+                            var RNG = Random.nextInt(1, 100)
+                            if (speed == 4) {
+                                if (RNG < 2) {
+                                    crash++
+                                }
+                            }
+                            if (speed == 5) {
+                                if (RNG < 4) {
+                                    crash++
+                                }
+                            }
+                            if (speed == 6) {
+                                if (RNG < 7) {
+                                    crash++
+                                }
+                            }
+                            if (speed == 7) {
+                                if (RNG < 13) {
+                                    crash++
+                                }
+                            }
+                            if (speed == 8) {
+                                if (RNG < 21) {
+                                    crash++
+                                }
+                            }
+                            if (speed > 8) {
+                                crash++
+                            }
+                        }
+                    }
+                }
+            }
+            if (crash > 0) {
+                return (0)
+            }
+        }
+    }
+    when (racer) {
+        "1" -> return (p1_speed)
+        "2" -> return (p2_speed)
+        else -> return 0
     }
 }
 
