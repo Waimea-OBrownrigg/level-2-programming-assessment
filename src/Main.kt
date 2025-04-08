@@ -25,28 +25,16 @@ fun main() {
     for (i in 1..TRACKLENGTH) {
         corners.add(false)
     }
-    corners[11] = true
-    corners[12] = true
-    corners[13] = true
-    corners[37] = true
-    corners[38] = true
-    corners[39] = true
-    corners[44] = true
-    corners[45] = true
-    corners[46] = true
-    corners[55] = true
-    corners[56] = true
-    corners[57] = true
-    corners[67] = true
-    corners[68] = true
-    corners[69] = true
-    corners[77] = true
-    corners[78] = true
-    corners[79] = true
+    val corner_tiles = mutableListOf(11,12,13,37,38,39,44,45,46,55,56,57,67,68,69,77,78,79)
+    for (i in corner_tiles) {
+        corners[i] = true
+    }
 
     var current_turn = 1
     var p1_speed = 0
     var p2_speed = 0
+    var p1_boost = 3
+    var p2_boost = 3
     var p1_lap = 0
     var p2_lap = 0
     var p1_pos = 0
@@ -63,11 +51,13 @@ fun main() {
     readln()
     println()
     println("Welcome, to the Kotlin Super Racer world finals!")
+    Thread.sleep(500)
     println("Want a rundown of the rules? ")
     while (true) {
         var rouxls = read("Y(es)/N(o)")
         if (rouxls.contains("Y")) {
             println("Alright then,")
+            println("")
             break
         }
         if (rouxls.contains("N")) {
@@ -78,7 +68,7 @@ fun main() {
 
     while (true) {
         repeat(2) {
-            var movement = a_b_or_c(current_turn, p1_speed, p2_speed)
+            var movement = a_b_or_c_or_d(current_turn, p1_speed, p2_speed, p1_boost, p2_boost)
             if (movement.contains("A")) {
                 when (current_turn) {
                     1 -> p1_speed += 10
@@ -86,7 +76,19 @@ fun main() {
                     else -> p1_speed + 1000000000
                 }
             }
-            if (movement.contains("B")){
+            if (movement.contains("B")) {
+                when (current_turn) {
+                    1 -> p1_speed += 30
+                    2 -> p2_speed += 30
+                    else -> p1_speed + 1000000000
+                }
+                when (current_turn) {
+                    1 -> p1_boost--
+                    2 -> p2_boost--
+                    else -> p1_boost = 0
+                }
+            }
+            if (movement.contains("D")){
                 when (current_turn) {
                     1 -> {
                         p1_speed -= 10
@@ -172,11 +174,13 @@ fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<
         speed = (speed/10)
         var start = track.indexOf(racer)
         var end = (track.indexOf(racer) + speed)
-        for (i in (start..end)) {
-            if (corners[i] == true) {
-                corners_probably_exist++
+        try {
+            for (i in (start..end)) {
+                if (corners[i] == true) {
+                    corners_probably_exist++
+                }
             }
-        }
+        }   catch (e: IndexOutOfBoundsException) {}
         if (corners_probably_exist == 0) {
             try {
                 track[start] = (EMPTY)
@@ -194,6 +198,7 @@ fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<
                     if (track.indexOf(racer) == 86) {
                         track[track.indexOf(racer)] = (EMPTY)
                         track[0] = racer
+                        start = track.indexOf(racer)
                     }
                     if (track.indexOf(racer) < 86) {
                         track[start] = (EMPTY)
@@ -201,27 +206,27 @@ fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<
                         if (corners[track.indexOf(racer)] == true) {
                             var RNG = Random.nextInt(1, 100)
                             if (speed == 4) {
-                                if (RNG < 2) {
+                                if (RNG == 1) {
                                     crash++
                                 }
                             }
                             if (speed == 5) {
-                                if (RNG < 4) {
+                                if (RNG <= 3) {
                                     crash++
                                 }
                             }
                             if (speed == 6) {
-                                if (RNG < 7) {
+                                if (RNG <= 6) {
                                     crash++
                                 }
                             }
                             if (speed == 7) {
-                                if (RNG < 13) {
+                                if (RNG <= 12) {
                                     crash++
                                 }
                             }
                             if (speed == 8) {
-                                if (RNG < 21) {
+                                if (RNG <= 20) {
                                     crash++
                                 }
                             }
@@ -233,6 +238,9 @@ fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<
                 }
             }
             if (crash > 0) {
+                println("You crashed!")
+                println("")
+                Thread.sleep(500)
                 return (0)
             }
         }
@@ -280,33 +288,56 @@ fun draw_track(p1_track: MutableList<String>, p2_track: MutableList<String>) {
     println("                                                                   \\        ${p2_track[43]}   ${p2_track[42]}   ${p2_track[41]}   ${p2_track[40]}        /")
     println("                                                                     \\ ${p1_track[44]}    ${p1_track[43]}   ${p1_track[42]}   ${p1_track[41]}   ${p1_track[40]}    ${p1_track[39]} /")
     println("                                                                        — — — — — — — — — — —")
+    Thread.sleep(1500)
     println("")
+
 }
 
-fun a_b_or_c(racer: Int, p1_speed: Int, p2_speed: Int): String {
+fun a_b_or_c_or_d(racer: Int, p1_speed: Int, p2_speed: Int, p1_boost: Int, p2_boost: Int): String {
     var action: String
-    println("Player $racer's turn")
+    var boost: Int
+    when (racer) {
+        1 -> boost = p1_boost
+        2 -> boost = p2_boost
+        else -> boost = 0
+    }
+    println("Player $racer's turn.")
+    Thread.sleep(500)
     when (racer) {
         1 -> {
-            println("Your current speed is $p1_speed")
+            println("Your current speed is $p1_speed KMpH!")
         }
         2 -> {
-            println("Your current speed is $p2_speed")
+            println("Your current speed is $p2_speed KMpH!")
         }
     }
+    Thread.sleep(500)
+    println("You have $boost boosts left!")
+    Thread.sleep(500)
     println("")
     println("A = Accelerate")
-    println("B = Brake")
+    println("B = Boost")
     println("C = Coast")
+    println("D = Decelerate")
     while (true) {
         action = read("Input action:")
         if (action.contains("A")) {
             break
         }
         else if (action.contains("B")) {
-            break
+            if (boost > 0) {
+                break
+            }
+            else {
+                println("You're out of boosts!")
+                Thread.sleep(500)
+                println()
+            }
         }
         else if (action.contains("C")) {
+            break
+        }
+        else if (action.contains("D")) {
             break
         }
 
