@@ -41,7 +41,6 @@ fun main() {
     var p2_pos = 0
     var win = 0
 
-
     println("Generic_Game_Dev presents...")
     println("     -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
     println("-=-=-=-=-=-=-=-=-=-Kotlin Super Racer!-=-=-=-=-=-=-=-=-=-")
@@ -51,24 +50,34 @@ fun main() {
     readln()
     println()
     println("Welcome, to the Kotlin Super Racer world finals!")
+    println()
     Thread.sleep(500)
+    val p1_name = read("Our first racer is... (Input player 1 name.)", 0)
+    val p2_name = read("And they will be up against... (Input player 2 name.)", 0)
     println("Want a rundown of the rules? ")
     while (true) {
-        var rouxls = read("Y(es)/N(o)")
+        val rouxls = read("Y(es)/N(o)", 1)
         if (rouxls.contains("Y")) {
             println("Alright then,")
-            println("")
+            println("When you start the race, you will have 4 options.")
+            println("First, accelerate, this makes you go faster.")
+            println("Then, there's boost, it makes you accelerate much faster than usual!")
+            println("Third is coast, you keep on driving at the same speed.")
+            println("And finally, you have decelerate, this slows you down.")
+            println("You can accelerate on straights, but if you go too fast around a corner, you'll lose all your speed.")
             break
         }
-        if (rouxls.contains("N")) {
+        else if (rouxls.contains("N")) {
             println("Ok then.")
             break
         }
     }
 
+    draw_track(p1_track, p2_track)
+
     while (true) {
         repeat(2) {
-            var movement = a_b_or_c_or_d(current_turn, p1_speed, p2_speed, p1_boost, p2_boost)
+            var movement = a_b_or_c_or_d(current_turn, p1_speed, p2_speed, p1_boost, p2_boost, p1_name, p2_name)
             if (movement.contains("A")) {
                 when (current_turn) {
                     1 -> p1_speed += 10
@@ -252,6 +261,85 @@ fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<
     }
 }
 
+fun a_b_or_c_or_d(racer: Int, p1_speed: Int, p2_speed: Int, p1_boost: Int, p2_boost: Int, p1_name: String, p2_name: String): String {
+    var action: String
+    var boost: Int
+    var name: String
+    when (racer) {
+        1 -> boost = p1_boost
+        2 -> boost = p2_boost
+        else -> boost = 0
+    }
+    when (racer) {
+        1 -> name = p1_name
+        2 -> name = p2_name
+        else -> name = "Darker, darker, yet darker"
+    }
+    println("It is $name's turn.")
+    Thread.sleep(500)
+    when (racer) {
+        1 -> {
+            println("Your current speed is $p1_speed KMpH!")
+        }
+        2 -> {
+            println("Your current speed is $p2_speed KMpH!")
+        }
+    }
+    Thread.sleep(500)
+    println("You have $boost boosts left!")
+    Thread.sleep(500)
+    println("")
+    println("A = Accelerate")
+    println("B = Boost")
+    println("C = Coast")
+    println("D = Decelerate")
+    while (true) {
+        action = read("Input action:", 1)
+        if (action.contains("A")) {
+            break
+        }
+        else if (action.contains("B")) {
+            if (boost > 0) {
+                break
+            }
+            else {
+                println("You're out of boosts!")
+                Thread.sleep(500)
+                println()
+            }
+        }
+        else if (action.contains("C")) {
+            break
+        }
+        else if (action.contains("D")) {
+            break
+        }
+
+    }
+    return action
+}
+
+fun read(question: String, type_question: Int): String {
+    var answer: String
+    print("$question ")
+    while (true) {
+        if (type_question == 1) {
+            answer = readln().uppercase()
+            if (answer.isNotBlank()) {
+                println()
+                return answer
+            }
+        }
+        if (type_question == 0) {
+            answer = readln()
+            if (answer.isNotBlank()) {
+                println()
+                return answer
+            }
+        }
+    }
+}
+
 fun draw_track(p1_track: MutableList<String>, p2_track: MutableList<String>) {
     println("                — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —")
     println("              /  ${p1_track[79]}    ${p1_track[80]}   ${p1_track[81]}   ${p1_track[82]}   ${p1_track[83]}   ${p1_track[84]}   ${p1_track[85]}   ${p1_track[86]} | ${p1_track[1]}   ${p1_track[2]}   ${p1_track[3]}   ${p1_track[4]}   ${p1_track[5]}   ${p1_track[6]}   ${p1_track[7]}   ${p1_track[8]}   ${p1_track[9]}   ${p1_track[10]}     ${p1_track[11]}  \\")
@@ -291,67 +379,4 @@ fun draw_track(p1_track: MutableList<String>, p2_track: MutableList<String>) {
     Thread.sleep(1500)
     println("")
 
-}
-
-fun a_b_or_c_or_d(racer: Int, p1_speed: Int, p2_speed: Int, p1_boost: Int, p2_boost: Int): String {
-    var action: String
-    var boost: Int
-    when (racer) {
-        1 -> boost = p1_boost
-        2 -> boost = p2_boost
-        else -> boost = 0
-    }
-    println("Player $racer's turn.")
-    Thread.sleep(500)
-    when (racer) {
-        1 -> {
-            println("Your current speed is $p1_speed KMpH!")
-        }
-        2 -> {
-            println("Your current speed is $p2_speed KMpH!")
-        }
-    }
-    Thread.sleep(500)
-    println("You have $boost boosts left!")
-    Thread.sleep(500)
-    println("")
-    println("A = Accelerate")
-    println("B = Boost")
-    println("C = Coast")
-    println("D = Decelerate")
-    while (true) {
-        action = read("Input action:")
-        if (action.contains("A")) {
-            break
-        }
-        else if (action.contains("B")) {
-            if (boost > 0) {
-                break
-            }
-            else {
-                println("You're out of boosts!")
-                Thread.sleep(500)
-                println()
-            }
-        }
-        else if (action.contains("C")) {
-            break
-        }
-        else if (action.contains("D")) {
-            break
-        }
-
-    }
-    return action
-}
-
-fun read(question: String): String {
-    print("$question ")
-    while (true) {
-        var answer = readln().uppercase()
-        if (answer.isNotBlank()) {
-            println()
-            return answer
-        }
-    }
 }
