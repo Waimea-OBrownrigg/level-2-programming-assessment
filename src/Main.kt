@@ -19,17 +19,20 @@ const val EMPTY = " "
 
 fun main() {
 
+    // This code is setting up stuff.
     val p1_track = set_up(1)
     val p2_track = set_up(2)
     val corners = mutableListOf<Boolean>()
     for (i in 1..TRACKLENGTH) {
         corners.add(false)
     }
+    // This tells the code where the corners on the racetrack are located.
     val corner_tiles = mutableListOf(11,12,13,37,38,39,44,45,46,55,56,57,67,68,69,77,78,79)
     for (i in corner_tiles) {
         corners[i] = true
     }
 
+    // A bunch of variables I use throughout the code.
     var current_turn = 1
     var p1_speed = 0
     var p2_speed = 0
@@ -39,8 +42,10 @@ fun main() {
     var p2_lap = 0
     var p1_pos = 0
     var p2_pos = 0
+    var inv_frame = false
     var win = 0
 
+    // An intro the game.
     println("Generic_Game_Dev presents...")
     println("     -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
     println("-=-=-=-=-=-=-=-=-=-Kotlin Super Racer!-=-=-=-=-=-=-=-=-=-")
@@ -52,32 +57,55 @@ fun main() {
     println("Welcome, to the Kotlin Super Racer world finals!")
     println()
     Thread.sleep(500)
+    // Getting player names.
     val p1_name = read("Our first racer is... (Input player 1 name.)", 0)
+    Thread.sleep(500)
     val p2_name = read("And they will be up against... (Input player 2 name.)", 0)
+    Thread.sleep(500)
+    // Asking the player if they want to hear the rules.
     println("Want a rundown of the rules? ")
     while (true) {
         val rouxls = read("Y(es)/N(o)", 1)
         if (rouxls.contains("Y")) {
             println("Alright then,")
+            Thread.sleep(1000)
             println("When you start the race, you will have 4 options.")
+            Thread.sleep(1000)
             println("First, accelerate, this makes you go faster.")
+            Thread.sleep(1000)
             println("Then, there's boost, it makes you accelerate much faster than usual!")
+            Thread.sleep(1000)
             println("Third is coast, you keep on driving at the same speed.")
+            Thread.sleep(1000)
             println("And finally, you have decelerate, this slows you down.")
+            Thread.sleep(1000)
             println("You can accelerate on straights, but if you go too fast around a corner, you'll lose all your speed.")
+            Thread.sleep(1000)
+            println("And that's all there is to it!")
+            Thread.sleep(1000)
             break
         }
         else if (rouxls.contains("N")) {
             println("Ok then.")
+            Thread.sleep(500)
             break
         }
     }
 
+    println()
+    println("Well, let's get started!")
+    println()
+    Thread.sleep(1000)
+
     draw_track(p1_track, p2_track)
 
+    // The main game loop, only breaks once a player has won.
     while (true) {
+        // Each "round" consists of two turns, one for each player, hence the "repeat twice".
         repeat(2) {
+            // Asking the player what they will do.
             var movement = a_b_or_c_or_d(current_turn, p1_speed, p2_speed, p1_boost, p2_boost, p1_name, p2_name)
+            // These then change the players speed depending on what they chose.
             if (movement.contains("A")) {
                 when (current_turn) {
                     1 -> p1_speed += 10
@@ -86,9 +114,11 @@ fun main() {
                 }
             }
             if (movement.contains("B")) {
+                // This variable makes sure the player doesn't immediately crash after boosting.
+                inv_frame = true
                 when (current_turn) {
-                    1 -> p1_speed += 30
-                    2 -> p2_speed += 30
+                    1 -> p1_speed += 50
+                    2 -> p2_speed += 50
                     else -> p1_speed + 1000000000
                 }
                 when (current_turn) {
@@ -114,12 +144,17 @@ fun main() {
                     else -> p1_speed - 1000000000
                 }
             }
+            // This moves the players to their new positions on the track.
             when (current_turn) {
-                1 -> p1_speed = move_car(current_turn.toString(), p1_speed, p2_speed, p1_track, p2_track, corners)
-                2 -> p2_speed = move_car(current_turn.toString(), p1_speed, p2_speed, p1_track, p2_track, corners)
+                1 -> p1_speed = move_car(current_turn.toString(), p1_speed, p2_speed, p1_track, p2_track, corners, inv_frame)
+                2 -> p2_speed = move_car(current_turn.toString(), p1_speed, p2_speed, p1_track, p2_track, corners, inv_frame)
                 else -> p1_speed + 1000000000
             }
 
+            // Sets the anti-crash back to false for the next player.
+            inv_frame = false
+
+            // Checks to see if either of the players have completed a lap.
             when(current_turn) {
                 1 -> {
                     if (p1_track.indexOf("1") < p1_pos) {
@@ -135,11 +170,13 @@ fun main() {
                 }
             }
 
+            // Changes the turn, allowing the next player to go.
             when(current_turn) {
                 1 -> current_turn = 2
                 2 -> current_turn = 1
             }
         }
+        // Shows the players the current state of the game and checks to see if anyone has won.
         draw_track(p1_track, p2_track)
         if (p1_lap == 3) {
             win = 1
@@ -150,9 +187,19 @@ fun main() {
             break
         }
     }
+
+    // A small congratulatory message for the winner.
+    when (win) {
+        1  -> println("$p1_name wins!")
+        2  -> println("$p2_name wins!")
+    }
+    println("Congratulations! You're the new world champion!")
 }
 
-        // Makes a list to act as the track, then fills it with empty slots and adds a race car.
+/**
+ * Makes a list to act as the track.
+ * Fills it with empty slots and adds a race car at the start.
+  */
 fun set_up(race_no: Int): MutableList<String> {
     val track = mutableListOf<String>()
     for (i in 1..TRACKLENGTH) {
@@ -162,9 +209,14 @@ fun set_up(race_no: Int): MutableList<String> {
     return track
 }
 
-fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<String>, p2_track: MutableList<String>, corners: MutableList<Boolean>): Int {
+/**
+ * Moves the cars to their new locations on the track.
+ * Checks if the car has crashed.
+ */
+fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<String>, p2_track: MutableList<String>, corners: MutableList<Boolean>, inv_frame: Boolean): Int {
     var speed: Int
     var track: MutableList<String>
+    // These "when"s take the relevant speed/track and turn it into a single variable we can use for the rest of the function.
     when (racer) {
         "1" -> speed = p1_speed
         "2" -> speed = p2_speed
@@ -175,14 +227,19 @@ fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<
         "2" -> track = p2_track
         else -> track = p1_track
     }
+    // Checks to see if the car is actually moving.
     if (speed == 0) {
     }
     else {
         var has_moved = 0
         var corners_probably_exist = 0
+        // Turns the speed into a smaller number so we can apply it to the list.
         speed = (speed/10)
+        // Where the car is at the start of the turn.
         var start = track.indexOf(racer)
+        // Where the car should end up.
         var end = (track.indexOf(racer) + speed)
+        // Checks to see if there are corners along the cars path.
         try {
             for (i in (start..end)) {
                 if (corners[i] == true) {
@@ -190,20 +247,25 @@ fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<
                 }
             }
         }   catch (e: IndexOutOfBoundsException) {}
+        // If there are no corners the car should be able to use the easy way to move forward.
         if (corners_probably_exist == 0) {
             try {
                 track[start] = (EMPTY)
                 track[start + speed] = racer
                 has_moved = 1
             } catch (e: IndexOutOfBoundsException) {
+                // But if it's about to complete a lap it may also need to use the complex way.
                 track[start] = racer
             }
         }
+        // So if it cant go the normal way...
         if (has_moved == 0) {
             var crash = 0
+            // It moves forward slot by slot.
             repeat(speed) {
                 if (crash == 0) {
                     start = track.indexOf(racer)
+                    // If the car is on the last slot of track, it is sent back to the beginning, a "lap".
                     if (track.indexOf(racer) == 86) {
                         track[track.indexOf(racer)] = (EMPTY)
                         track[0] = racer
@@ -212,40 +274,47 @@ fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<
                     if (track.indexOf(racer) < 86) {
                         track[start] = (EMPTY)
                         track[start + 1] = racer
-                        if (corners[track.indexOf(racer)] == true) {
-                            var RNG = Random.nextInt(1, 100)
-                            if (speed == 4) {
-                                if (RNG == 1) {
+                        // If the car isn't using a boost, and therefore isn't immune to crashing...
+                        if (inv_frame == false) {
+                            // This code randomly decides whether to crash it or spare it.
+                            if (corners[track.indexOf(racer)] == true) {
+                                var RNG = Random.nextInt(1, 100)
+                                // Depending on your speed, you will have a higher or lower chance of survival.
+                                if (speed == 4) {
+                                    if (RNG == 1) {
+                                        crash++
+                                    }
+                                }
+                                if (speed == 5) {
+                                    if (RNG <= 3) {
+                                        crash++
+                                    }
+                                }
+                                if (speed == 6) {
+                                    if (RNG <= 6) {
+                                        crash++
+                                    }
+                                }
+                                if (speed == 7) {
+                                    if (RNG <= 12) {
+                                        crash++
+                                    }
+                                }
+                                if (speed == 8) {
+                                    if (RNG <= 20) {
+                                        crash++
+                                    }
+                                }
+                                // If you're going 90 or above you crash.
+                                if (speed > 8) {
                                     crash++
                                 }
-                            }
-                            if (speed == 5) {
-                                if (RNG <= 3) {
-                                    crash++
-                                }
-                            }
-                            if (speed == 6) {
-                                if (RNG <= 6) {
-                                    crash++
-                                }
-                            }
-                            if (speed == 7) {
-                                if (RNG <= 12) {
-                                    crash++
-                                }
-                            }
-                            if (speed == 8) {
-                                if (RNG <= 20) {
-                                    crash++
-                                }
-                            }
-                            if (speed > 8) {
-                                crash++
                             }
                         }
                     }
                 }
             }
+            // If you crashed, you will be told so here.
             if (crash > 0) {
                 println("You crashed!")
                 println("")
@@ -254,6 +323,7 @@ fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<
             }
         }
     }
+    // Returns the players speed as 0 if they crashed or whatever it was originally.
     when (racer) {
         "1" -> return (p1_speed)
         "2" -> return (p2_speed)
@@ -261,6 +331,9 @@ fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<
     }
 }
 
+/**
+ * A function to ask the player what they want to do.
+ */
 fun a_b_or_c_or_d(racer: Int, p1_speed: Int, p2_speed: Int, p1_boost: Int, p2_boost: Int, p1_name: String, p2_name: String): String {
     var action: String
     var boost: Int
@@ -277,6 +350,7 @@ fun a_b_or_c_or_d(racer: Int, p1_speed: Int, p2_speed: Int, p1_boost: Int, p2_bo
     }
     println("It is $name's turn.")
     Thread.sleep(500)
+    // Informs the player of some useful statistics.
     when (racer) {
         1 -> {
             println("Your current speed is $p1_speed KMpH!")
@@ -294,11 +368,14 @@ fun a_b_or_c_or_d(racer: Int, p1_speed: Int, p2_speed: Int, p1_boost: Int, p2_bo
     println("C = Coast")
     println("D = Decelerate")
     while (true) {
+        // The part where it asks you.
         action = read("Input action:", 1)
+        // Checks if the input is a valid option.
         if (action.contains("A")) {
             break
         }
         else if (action.contains("B")) {
+            // Checks to see if you actually have any boosts left.
             if (boost > 0) {
                 break
             }
@@ -319,11 +396,16 @@ fun a_b_or_c_or_d(racer: Int, p1_speed: Int, p2_speed: Int, p1_boost: Int, p2_bo
     return action
 }
 
+/**
+ * A function to get me player inputs.
+ */
 fun read(question: String, type_question: Int): String {
     var answer: String
     print("$question ")
     while (true) {
+        // There are two types of question, 1, for single-letter answers, and 0, for whole words.
         if (type_question == 1) {
+            // Makes the answer always uppercase for the checks it will need to go through.
             answer = readln().uppercase()
             if (answer.isNotBlank()) {
                 println()
@@ -340,6 +422,9 @@ fun read(question: String, type_question: Int): String {
     }
 }
 
+/**
+ *  A function that prints an overhead visualization of the racetrack.
+ */
 fun draw_track(p1_track: MutableList<String>, p2_track: MutableList<String>) {
     println("                — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — — —")
     println("              /  ${p1_track[79]}    ${p1_track[80]}   ${p1_track[81]}   ${p1_track[82]}   ${p1_track[83]}   ${p1_track[84]}   ${p1_track[85]}   ${p1_track[86]} | ${p1_track[1]}   ${p1_track[2]}   ${p1_track[3]}   ${p1_track[4]}   ${p1_track[5]}   ${p1_track[6]}   ${p1_track[7]}   ${p1_track[8]}   ${p1_track[9]}   ${p1_track[10]}     ${p1_track[11]}  \\")
