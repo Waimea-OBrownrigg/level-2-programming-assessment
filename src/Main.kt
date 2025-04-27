@@ -193,6 +193,7 @@ fun main() {
         1  -> println("$p1_name wins!")
         2  -> println("$p2_name wins!")
     }
+    Thread.sleep(1000)
     println("Congratulations! You're the new world champion!")
 }
 
