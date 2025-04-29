@@ -159,12 +159,16 @@ fun main() {
                 1 -> {
                     if (p1_track.indexOf("1") < p1_pos) {
                         p1_lap++
+                        println("Completed lap $p1_lap/3")
+                        Thread.sleep(500)
                     }
                     p1_pos = p1_track.indexOf("1")
                 }
                 2 -> {
                     if (p2_track.indexOf("2") < p2_pos) {
                         p2_lap++
+                        println("Completed lap $p2_lap/3")
+                        Thread.sleep(500)
                     }
                     p2_pos = p2_track.indexOf("2")
                 }
@@ -194,7 +198,7 @@ fun main() {
         2  -> println("$p2_name wins!")
     }
     Thread.sleep(1000)
-    println("Congratulations! You're the new world champion!")
+    println("Congratulations! You are the new world champion!")
 }
 
 /**
@@ -408,9 +412,15 @@ fun read(question: String, type_question: Int): String {
         if (type_question == 1) {
             // Makes the answer always uppercase for the checks it will need to go through.
             answer = readln().uppercase()
-            if (answer.isNotBlank()) {
-                println()
-                return answer
+            // Makes sure the answer is only one letter.
+            if (answer.length == 1) {
+                if (answer.isNotBlank()) {
+                    println()
+                    return answer
+                }
+            }
+            else {
+                println("Your input must be one letter.")
             }
         }
         if (type_question == 0) {

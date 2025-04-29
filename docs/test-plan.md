@@ -30,8 +30,8 @@ The intro needs to get two types of player info, first, a string, most likely th
 
 ### Test Data To Use
 
-First I'll input some player names and see if it can print them back at me, then I'll make a yes or no question asking if they want to see the rules, 
-then print a different thing depending on the answer.
+First I'll input some player names and see if it can print them back at me, then I'll try answering a yes/no question with more than one letter, 
+and finally, I need to check whether the yes/no question outputs the right response based on the player input.
 
 ### Expected Test Result
 
@@ -96,9 +96,52 @@ e.g. a car going 80Kmph moves 2 spaces at the end, and then 6 at the start.
 
 ---
 
+## Do The Cars Crash
+
+When a car is going around a corner it should generate a number and based on the outcome, either crash or survive, the higher the number, 
+the bigger the chance to crash.
+
+### Test Data To Use
+
+Drive the cars around corners at various speeds and record the outcome.
+
+### Expected Test Result
+
+Lower speeds should have a smaller amount of crashes while higher speeds have a larger amount.
+
+---
+
+## Does The Boost Grant Invincibility
+
+Using a boost on a corner should make you immune to crashing.
+
+### Test Data To Use
+
+I will approach the corner at a speed which should have a 100% chance of crashing, then use a boost to go around the corner at high speeds. 
+
+### Expected Test Result
+
+The car should be able to preserve its speed around the corner.
+
+---
+
+## Does The Number Of Laps Increase
+
+When a car goes around the track, their number of laps completed should go up by one.
+
+### Test Data To Use
+
+Go around the track and print the number of laps.
+
+### Expected Test Result
+
+The number of laps should stay accurate.
+
+---
+
 ## Does The Track Display Properly
 
-Example test description. Example test description. Example test description. Example test description. Example test description. Example test description.
+Once the players complete a round, (Two turns.) the program should print an image of the track with a number 1 and 2 showing where the cars are.
 
 ### Test Data To Use
 
@@ -106,20 +149,20 @@ Run the code with the cars in different positions to see if everything is where 
 
 ### Expected Test Result
 
-The code will return an image of the track with everything displaying properly 
+The code will return an image of the track with everything displaying properly. 
 
 ---
 
-## Example Test Name
+## Can You Win
 
-Example test description. Example test description. Example test description. Example test description. Example test description. Example test description.
+Once a car completes 3 laps, the game should end, and they should be congratulated.
 
 ### Test Data To Use
 
-Details of test data and reasons for selection. Details of test data and reasons for selection. Details of test data and reasons for selection.
+Win the race with both drivers and check the resulting message. 
 
 ### Expected Test Result
 
-Statement detailing what should happen. Statement detailing what should happen. Statement detailing what should happen. Statement detailing what should happen.
+If p2 wins, the race should end and their name should be the one that is displayed.
 
 ---
