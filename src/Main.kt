@@ -51,11 +51,10 @@ fun main() {
     println("-=-=-=-=-=-=-=-=-=-Kotlin Super Racer!-=-=-=-=-=-=-=-=-=-")
     println("     -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
     println("")
-    print("                Press any key to start: ")
+    print("                Press ENTER to start: ")
     readln()
     println()
     println("Welcome, to the Kotlin Super Racer world finals!")
-    println()
     Thread.sleep(500)
     // Getting player names.
     val p1_name = read("Our first racer is... (Input player 1 name.)", 0)
@@ -63,6 +62,7 @@ fun main() {
     val p2_name = read("And they will be up against... (Input player 2 name.)", 0)
     Thread.sleep(500)
     // Asking the player if they want to hear the rules.
+    println()
     println("Want a rundown of the rules? ")
     while (true) {
         val rouxls = read("Y(es)/N(o)", 1)
@@ -89,6 +89,9 @@ fun main() {
             println("Ok then.")
             Thread.sleep(500)
             break
+        }
+        else {
+            println("Please input a valid letter.")
         }
     }
 
@@ -144,6 +147,9 @@ fun main() {
                     else -> p1_speed - 1000000000
                 }
             }
+
+            println("New speed: $p1_speed")
+
             // This moves the players to their new positions on the track.
             when (current_turn) {
                 1 -> p1_speed = move_car(current_turn.toString(), p1_speed, p2_speed, p1_track, p2_track, corners, inv_frame)
@@ -181,6 +187,7 @@ fun main() {
             }
         }
         // Shows the players the current state of the game and checks to see if anyone has won.
+        println()
         draw_track(p1_track, p2_track)
         if (p1_lap == 3) {
             win = 1
@@ -321,8 +328,8 @@ fun move_car(racer: String, p1_speed: Int, p2_speed: Int, p1_track: MutableList<
             }
             // If you crashed, you will be told so here.
             if (crash > 0) {
-                println("You crashed!")
                 println("")
+                println("You crashed!")
                 Thread.sleep(500)
                 return (0)
             }
@@ -353,6 +360,7 @@ fun a_b_or_c_or_d(racer: Int, p1_speed: Int, p2_speed: Int, p1_boost: Int, p2_bo
         2 -> name = p2_name
         else -> name = "Darker, darker, yet darker"
     }
+    println("")
     println("It is $name's turn.")
     Thread.sleep(500)
     // Informs the player of some useful statistics.
@@ -387,7 +395,6 @@ fun a_b_or_c_or_d(racer: Int, p1_speed: Int, p2_speed: Int, p1_boost: Int, p2_bo
             else {
                 println("You're out of boosts!")
                 Thread.sleep(500)
-                println()
             }
         }
         else if (action.contains("C")) {
@@ -395,6 +402,9 @@ fun a_b_or_c_or_d(racer: Int, p1_speed: Int, p2_speed: Int, p1_boost: Int, p2_bo
         }
         else if (action.contains("D")) {
             break
+        }
+        else {
+            println("Please input a valid letter.")
         }
 
     }
@@ -406,8 +416,9 @@ fun a_b_or_c_or_d(racer: Int, p1_speed: Int, p2_speed: Int, p1_boost: Int, p2_bo
  */
 fun read(question: String, type_question: Int): String {
     var answer: String
-    print("$question ")
     while (true) {
+        println()
+        print("$question ")
         // There are two types of question, 1, for single-letter answers, and 0, for whole words.
         if (type_question == 1) {
             // Makes the answer always uppercase for the checks it will need to go through.
@@ -415,19 +426,25 @@ fun read(question: String, type_question: Int): String {
             // Makes sure the answer is only one letter.
             if (answer.length == 1) {
                 if (answer.isNotBlank()) {
-                    println()
                     return answer
                 }
             }
             else {
-                println("Your input must be one letter.")
+                if (answer.isNotBlank()) {
+                    println("Your input must be one letter.")
+                }
+                else {
+                    println("Your input must not be blank.")
+                }
             }
         }
         if (type_question == 0) {
             answer = readln()
             if (answer.isNotBlank()) {
-                println()
                 return answer
+            }
+            else {
+                println("Your input must not be blank.")
             }
         }
     }

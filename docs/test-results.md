@@ -14,9 +14,10 @@ I ran the code and printed lists for racer one's position, racer two's position,
 
 ### Test Result
 
-![example.png](screenshots/example.png)
+![Screenshot 2025-04-30 232432.png](screenshots/Screenshot%202025-04-30%20232432.png)
 
-Comment on test result. Comment on test result. Comment on test result. Comment on test result. Comment on test result. Comment on test result.
+Track seems to be in working order, the cars are in the correct place, 
+(The empty space at the start is to help them start a new lap.) and the corners ()
 
 ---
 
@@ -31,9 +32,19 @@ and finally, I checked whether the yes/no question outputs the right response ba
 
 ### Test Result
 
-![example.png](screenshots/example.png)
+![Screenshot 2025-05-01 005436.png](screenshots/Screenshot%202025-05-01%20005436.png)
 
-Comment on test result. Comment on test result. Comment on test result. Comment on test result. Comment on test result. Comment on test result.
+As you can see, the program is able to easily retrieve and print player input, now, what about yes/no questions? 
+
+![Screenshot 2025-05-01 005837.png](screenshots/Screenshot%202025-05-01%20005837.png)
+
+![Screenshot 2025-05-01 005909.png](screenshots/Screenshot%202025-05-01%20005909.png)
+
+Fortunately, the yes/no questions are functioning properly.
+
+I also put in some invalid inputs to see its reaction, it didn't allow them, but it also didn't have an error message, sometimes it didn't even reprint the question, so I typed some of those up, here's the result:
+
+![Screenshot 2025-05-01 012847.png](screenshots/Screenshot%202025-05-01%20012847.png)
 
 ---
 
@@ -47,9 +58,9 @@ Ran through the code to make sure it's updating the right variables
 
 ### Test Result
 
-![example.png](screenshots/example.png)
+![Screenshot 2025-05-01 013909.png](screenshots/Screenshot%202025-05-01%20013909.png)
 
-Comment on test result. Comment on test result. Comment on test result. Comment on test result. Comment on test result. Comment on test result.
+Yup, you can see here the use of the players name, indicating the turns are functioning properly.
 
 ---
 
@@ -63,9 +74,15 @@ I tried all of the different options and printed the speed after each one.
 
 ### Test Result
 
-![example.png](screenshots/example.png)
+![Screenshot 2025-05-01 014634.png](screenshots/Screenshot%202025-05-01%20014634.png)
 
-Comment on test result. Comment on test result. Comment on test result. Comment on test result. Comment on test result. Comment on test result.
+![Screenshot 2025-05-01 014701.png](screenshots/Screenshot%202025-05-01%20014701.png)
+
+![Screenshot 2025-05-01 014722.png](screenshots/Screenshot%202025-05-01%20014722.png)
+
+![Screenshot 2025-05-01 014839.png](screenshots/Screenshot%202025-05-01%20014839.png)
+
+All options are functioning as intended, A raises speed by 10, B by 50, C keeps it the same, and D decreases it by 10.
 
 ---
 
