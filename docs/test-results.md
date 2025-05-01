@@ -14,7 +14,7 @@ I ran the code and printed lists for racer one's position, racer two's position,
 
 ### Test Result
 
-![Screenshot 2025-04-30 232432.png](screenshots/Screenshot%202025-04-30%20232432.png)
+![Screenshot 2025-04-30 232432.png](screenshots/Screenshot 2025-04-30 232432.png)
 
 Track seems to be in working order, the cars are in the correct place, 
 (The empty space at the start is to help them start a new lap.) and the corners ()
@@ -32,19 +32,19 @@ and finally, I checked whether the yes/no question outputs the right response ba
 
 ### Test Result
 
-![Screenshot 2025-05-01 005436.png](screenshots/Screenshot%202025-05-01%20005436.png)
+![Screenshot 2025-05-01 005436.png](screenshots/Screenshot 2025-05-01 005436.png)
 
 As you can see, the program is able to easily retrieve and print player input, now, what about yes/no questions? 
 
-![Screenshot 2025-05-01 005837.png](screenshots/Screenshot%202025-05-01%20005837.png)
+![Screenshot 2025-05-01 005837.png](screenshots/Screenshot 2025-05-01 005837.png)
 
-![Screenshot 2025-05-01 005909.png](screenshots/Screenshot%202025-05-01%20005909.png)
+![Screenshot 2025-05-01 005909.png](screenshots/Screenshot 2025-05-01 005909.png)
 
 Fortunately, the yes/no questions are functioning properly.
 
 I also put in some invalid inputs to see its reaction, it didn't allow them, but it also didn't have an error message, sometimes it didn't even reprint the question, so I typed some of those up, here's the result:
 
-![Screenshot 2025-05-01 012847.png](screenshots/Screenshot%202025-05-01%20012847.png)
+![Screenshot 2025-05-01 012847.png](screenshots/Screenshot 2025-05-01 012847.png)
 
 ---
 
@@ -58,7 +58,7 @@ Ran through the code to make sure it's updating the right variables
 
 ### Test Result
 
-![Screenshot 2025-05-01 013909.png](screenshots/Screenshot%202025-05-01%20013909.png)
+![Screenshot 2025-05-01 013909.png](screenshots/Screenshot 2025-05-01 013909.png)
 
 Yup, you can see here the use of the players name, indicating the turns are functioning properly.
 
@@ -74,13 +74,13 @@ I tried all of the different options and printed the speed after each one.
 
 ### Test Result
 
-![Screenshot 2025-05-01 014634.png](screenshots/Screenshot%202025-05-01%20014634.png)
+![Screenshot 2025-05-01 014634.png](screenshots/Screenshot 2025-05-01 014634.png)
 
-![Screenshot 2025-05-01 014701.png](screenshots/Screenshot%202025-05-01%20014701.png)
+![Screenshot 2025-05-01 014701.png](screenshots/Screenshot 2025-05-01 014701.png)
 
-![Screenshot 2025-05-01 014722.png](screenshots/Screenshot%202025-05-01%20014722.png)
+![Screenshot 2025-05-01 014722.png](screenshots/Screenshot 2025-05-01 014722.png)
 
-![Screenshot 2025-05-01 014839.png](screenshots/Screenshot%202025-05-01%20014839.png)
+![Screenshot 2025-05-01 014839.png](screenshots/Screenshot 2025-05-01 014839.png)
 
 All options are functioning as intended, A raises speed by 10, B by 50, C keeps it the same, and D decreases it by 10.
 
@@ -112,13 +112,35 @@ I ran the code multiple times with the cars going at different speeds.
 
 ### Test Result
 
-![Screenshot 2025-04-29 140907.png](screenshots/Screenshot%202025-04-29%20140907.png)
+![Screenshot 2025-04-01 132007.png](screenshots/Screenshot 2025-04-01 132007.png)
+
+Old screenshot, but the code is still essentialy the same.
 
 When I tested the results, the program returned that I was out of bounds.
 This was because, after the program tries to move the car normally and failing, the spot that used to contain the car 
 would remain empty, meaning the car didn't exist, so when I referenced the cars location later, it didn't know what I
 was talking about, to fix this, I simply added a line of code to the catch after the try that replaced the car back 
 where it should be.
+
+![Screenshot 2025-05-01 120233.png](screenshots/Screenshot 2025-05-01 120233.png)
+
+After this, the code worked pretty well.
+
+![Screenshot 2025-05-01 114504.png](screenshots/Screenshot 2025-05-01 114504.png)
+
+![Screenshot 2025-05-01 114513.png](screenshots/Screenshot 2025-05-01 114513.png)
+
+![Screenshot 2025-05-01 114538.png](screenshots/Screenshot 2025-05-01 114538.png)
+
+Car one's speed is 20, it moves once, then moves again, returning to the start of the list.
+
+![Screenshot 2025-05-01 115057.png](screenshots/Screenshot 2025-05-01 115057.png)
+
+![Screenshot 2025-05-01 115109.png](screenshots/Screenshot 2025-05-01 115109.png)
+
+![Screenshot 2025-05-01 115114.png](screenshots/Screenshot 2025-05-01 115114.png)
+
+The car's speed is 40, it moves twice, goes to the start of the list, and then moves once more.
 
 ---
 

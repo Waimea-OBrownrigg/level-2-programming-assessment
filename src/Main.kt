@@ -148,8 +148,6 @@ fun main() {
                 }
             }
 
-            println("New speed: $p1_speed")
-
             // This moves the players to their new positions on the track.
             when (current_turn) {
                 1 -> p1_speed = move_car(current_turn.toString(), p1_speed, p2_speed, p1_track, p2_track, corners, inv_frame)
@@ -188,6 +186,7 @@ fun main() {
         }
         // Shows the players the current state of the game and checks to see if anyone has won.
         println()
+        Thread.sleep(500)
         draw_track(p1_track, p2_track)
         if (p1_lap == 3) {
             win = 1
