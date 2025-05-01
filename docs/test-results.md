@@ -17,7 +17,7 @@ I ran the code and printed lists for racer one's position, racer two's position,
 ![Screenshot 2025-04-30 232432.png](screenshots/Screenshot 2025-04-30 232432.png)
 
 Track seems to be in working order, the cars are in the correct place, 
-(The empty space at the start is to help them start a new lap.) and the corners ()
+(The empty space at the start is to help them start a new lap.) and the corners (Represented by true.) are all where they should be.
 
 ---
 
@@ -42,7 +42,7 @@ As you can see, the program is able to easily retrieve and print player input, n
 
 Fortunately, the yes/no questions are functioning properly.
 
-I also put in some invalid inputs to see its reaction, it didn't allow them, but it also didn't have an error message, sometimes it didn't even reprint the question, so I typed some of those up, here's the result:
+I also put in some invalid inputs to see its reaction, it didn't allow them, but it also didn't have an error message, sometimes it didn't even reprint the question, so I moved around some of the println's and questions, before adding in the error messages, here's the result:
 
 ![Screenshot 2025-05-01 012847.png](screenshots/Screenshot 2025-05-01 012847.png)
 
@@ -84,6 +84,10 @@ I tried all of the different options and printed the speed after each one.
 
 All options are functioning as intended, A raises speed by 10, B by 50, C keeps it the same, and D decreases it by 10.
 
+![Screenshot 2025-05-01 134757.png](screenshots/Screenshot 2025-05-01 134757.png)
+
+If the player tries to boost without any boosts left, they get an error message.
+
 ---
 
 ## Do The Cars Move
@@ -96,9 +100,23 @@ Ran the code, set the speed for the cars, and counted the amount of spaces they 
 
 ### Test Result
 
-![example.png](screenshots/example.png)
+![Screenshot 2025-05-01 133654.png](screenshots/Screenshot 2025-05-01 133654.png)
 
-Comment on test result. Comment on test result. Comment on test result. Comment on test result. Comment on test result. Comment on test result.
+![Screenshot 2025-05-01 133703.png](screenshots/Screenshot 2025-05-01 133703.png)
+
+![Screenshot 2025-05-01 133724.png](screenshots/Screenshot 2025-05-01 133724.png)
+
+Car is going 50, moves 5 spaces.
+
+![Screenshot 2025-05-01 133832.png](screenshots/Screenshot 2025-05-01 133832.png)
+
+![Screenshot 2025-05-01 133841.png](screenshots/Screenshot 2025-05-01 133841.png)
+
+![Screenshot 2025-05-01 133852.png](screenshots/Screenshot 2025-05-01 133852.png)
+
+Car is going 20, moves 2.
+
+Everything seems to to be in working order.
 
 ---
 
@@ -155,7 +173,17 @@ I drove the cars around corners at various speeds and recorded the outcome.
 
 ### Test Result
 
-![example.png](screenshots/example.png)
+![Screenshot 2025-05-01 121412.png](screenshots/Screenshot 2025-05-01 121412.png)
+
+![Screenshot 2025-05-01 121419.png](screenshots/Screenshot 2025-05-01 121419.png)
+
+Car one is going 80, accelerates to 90, (A 100% chance to crash.) and crashes.
+
+![Screenshot 2025-05-01 122510.png](screenshots/Screenshot 2025-05-01 122510.png)
+
+![Screenshot 2025-05-01 122516.png](screenshots/Screenshot 2025-05-01 122516.png)
+
+Car two is going 50, gets unlucky, and crashes.
 
 Comment on test result. Comment on test result. Comment on test result. Comment on test result. Comment on test result. Comment on test result.
 
@@ -171,9 +199,11 @@ I will approach the corner at a speed which should have a 100% chance of crashin
 
 ### Test Result
 
-![example.png](screenshots/example.png)
+![Screenshot 2025-05-01 121055.png](screenshots/Screenshot 2025-05-01 121055.png)
 
-Comment on test result. Comment on test result. Comment on test result. Comment on test result. Comment on test result. Comment on test result.
+![Screenshot 2025-05-01 121115.png](screenshots/Screenshot 2025-05-01 121115.png)
+
+Player one boosts to go 160 KMpH around a corner, usually well beyond possible, but the boost prevents the crash.
 
 ---
 
@@ -187,9 +217,13 @@ Go around the track and print the number of laps.
 
 ### Test Result
 
-![example.png](screenshots/example.png)
+![Screenshot 2025-05-01 121330.png](screenshots/Screenshot 2025-05-01 121330.png)
 
-Comment on test result. Comment on test result. Comment on test result. Comment on test result. Comment on test result. Comment on test result.
+![Screenshot 2025-05-01 121654.png](screenshots/Screenshot 2025-05-01 121654.png)
+
+![Screenshot 2025-05-01 122055.png](screenshots/Screenshot 2025-05-01 122055.png)
+
+As Player two passes the finish line for the final time, the lap counter is set to three and the race ends.
 
 ---
 
@@ -203,7 +237,7 @@ Run the code with the cars in different positions to see if everything is where 
 
 ### Test Result
 
-![example.png](screenshots/example.png)
+![Screenshot 2025-05-01 135814.png](screenshots/Screenshot 2025-05-01 135814.png)
 
 Success! The cars all display properly, and the track looks great.
 
@@ -219,8 +253,10 @@ Win the race with both drivers and check the resulting message.
 
 ### Test Result
 
-![example.png](screenshots/example.png)
+![Screenshot 2025-05-01 140000.png](screenshots/Screenshot 2025-05-01 140000.png)
 
-Comment on test result. Comment on test result. Comment on test result. Comment on test result. Comment on test result. Comment on test result.
+![Screenshot 2025-05-01 122102.png](screenshots/Screenshot 2025-05-01 122102.png)
+
+Victory message displays correctly for both players.
 
 ---

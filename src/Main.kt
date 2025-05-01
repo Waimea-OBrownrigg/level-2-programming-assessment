@@ -188,7 +188,7 @@ fun main() {
         println()
         Thread.sleep(500)
         draw_track(p1_track, p2_track)
-        if (p1_lap == 3) {
+        if (p1_lap == 1) {
             win = 1
             break
         }
